@@ -1,0 +1,45 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+void toLowerCase(std::string &text) {
+    std::transform(text.begin(), text.end(), text.begin(), ::tolower);
+}
+
+int main() {
+    // List of common scam keywords
+    std::vector<std::string> scamKeywords = {
+        "urgent", "winner", "claim prize", "bank account", 
+        "verify your account", "click here", "lottery", "offer expires"
+    };
+    
+    // Prompt user for email input
+    std::string emailText;
+    std::cout << "Enter the email content:\n";
+    std::getline(std::cin, emailText);
+    
+    // Convert email text to lowercase for case-insensitive matching
+    toLowerCase(emailText);
+    
+    // Scan for scam words and calculate risk score
+    int riskScore = 0;
+    for (const std::string &keyword : scamKeywords) {
+        if (emailText.find(keyword) != std::string::npos) {
+            riskScore++;
+        }
+    }
+    
+    // Output results based on the risk score
+    std::cout << "Risk Score: " << riskScore << "\n";
+    if (riskScore > 5) {
+        std::cout << "Email is likely a scam; avoid interaction.\n";
+    } else if (riskScore >= 3) {
+        std::cout << "Email is suspicious; proceed with caution.\n";
+    } else {
+        std::cout << "Email seems safe.\n";
+    }
+
+    return 0;
+}
+
