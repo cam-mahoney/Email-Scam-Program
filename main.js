@@ -1,7 +1,3 @@
-function toLowerCase(text) {
-    return text.toLowerCase();
-}
-
 function checkRisk() {
     const keywords = [
         "urgent", "winner", "claim prize", "bank account",
@@ -10,7 +6,7 @@ function checkRisk() {
     ];
 
     let emailText = document.getElementById('emailText').value;
-    emailText = toLowerCase(emailText);
+    emailText = emailText.toLowerCase();
 
     let riskScore = 0;
     for (const keyword of keywords) {
@@ -20,12 +16,13 @@ function checkRisk() {
     }
 
     const result = document.getElementById('result');
-    result.textContent = `Risk score: ${riskScore}\n`;
+    result.innerHTML = `Risk score: ${riskScore}<br>`;
+
     if (riskScore >= 3) {
-        result.textContent += "Warning! Do not interact with this email.";
+        result.innerHTML += "Warning! Do not interact with this email.";
     } else if (riskScore >= 2) {
-        result.textContent += "Email appears suspicious. Proceed with caution.";
+        result.innerHTML += "Email appears suspicious. Proceed with caution.";
     } else {
-        result.textContent += "Email is safe.";
+        result.innerHTML += "Email is safe.";
     }
 }
